@@ -7,7 +7,6 @@ use App\Enums\UserType;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class SystemDataSeeder extends Seeder
