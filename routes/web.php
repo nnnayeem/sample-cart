@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,16 +17,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', '/login');
+Route::redirect('/home', '/admin/dashboard');
 
 Auth::routes();
 
 Route::middleware('isAdmin')->prefix('admin')->group(function () {
-    Route::get('dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::get('customers', [\App\Http\Controllers\Admin\UserController::class, 'customers'])->name('customer.index');
-    Route::get('orders', [\App\Http\Controllers\Admin\OrderController::class, 'index'])->name('orders.index');
+    Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('home');
+    Route::get('customers', [UserController::class, 'customers'])->name('customer.index');
+    Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
 
 });
 
