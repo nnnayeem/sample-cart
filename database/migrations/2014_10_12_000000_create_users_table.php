@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('type', 25)->default(UserType::cus->value);
-            $table->string('status', 25)->default(UserStatus::iactv->value);
+            $table->string('status', 25)->default(UserStatus::iactv());
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

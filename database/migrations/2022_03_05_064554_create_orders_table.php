@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('status')->default(OrderStatus::pending->value)->index();
             $table->decimal('total_price', 7, 2)->default(0.0);
             $table->timestamps();
+            $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users')->restrictOnDelete();
         });
     }

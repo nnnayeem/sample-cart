@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Enums\UserStatus;
+use App\Enums\UserType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -21,7 +23,9 @@ class UserFactory extends Factory
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => '12345678',
+            'type' => $this->faker->randomElement(UserType::values()),
+            'status' => $this->faker->randomElement(UserStatus::values()),
             'remember_token' => Str::random(10),
         ];
     }
