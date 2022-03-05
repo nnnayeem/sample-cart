@@ -8,4 +8,5 @@ enum OrderStatus:string{
     case accepted = 'accepted';
     case delivering = 'delivering';
     case delivered = 'delivered';
+    case cancelled = 'cancelled';
 }

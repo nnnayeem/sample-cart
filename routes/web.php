@@ -19,7 +19,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::middleware('isAdmin')->group(function () {
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::middleware('isAdmin')->prefix('admin')->group(function () {
+    Route::get('dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('customers', [\App\Http\Controllers\Admin\UserController::class, 'customers'])->name('customer.index');
+    Route::get('orders', [\App\Http\Controllers\Admin\OrderController::class, 'index'])->name('orders.index');
+
 });
 
