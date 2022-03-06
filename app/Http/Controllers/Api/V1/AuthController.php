@@ -32,9 +32,9 @@ class AuthController extends Controller
         $form = $request->validated();
 
         $user = User::where('email', $form['email'])->first();
-        if(!($user->status == UserStatus::actv())) return Response::unprocessable('Your account is not active.');
 
         if (!empty($user) && Hash::check($form['password'], $user->password)) {
+            if(!($user->status == UserStatus::actv())) return Response::unprocessable('Your account is not active.');
             $user->tokens()->delete();
             $token = $user->createToken('web0');
             return Response::authenticated($token->plainTextToken, new UserResource($user));
