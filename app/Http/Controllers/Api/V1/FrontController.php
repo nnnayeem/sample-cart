@@ -14,6 +14,6 @@ class FrontController extends Controller
     {
         $products = Product::paginate(10);
 
-        return Response::success('Product fetched successfully', new ProductResource($products));
+        return Response::success('Product fetched successfully', ProductResource::collection($products)->response()->getData());
     }
 }
