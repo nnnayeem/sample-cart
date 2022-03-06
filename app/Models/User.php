@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DateTimeInterface;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -47,6 +48,24 @@ class User extends Authenticatable
     ];
 
     /**
+     * The storage format of the model's date columns.
+     *
+     * @var string
+     */
+    protected $dateFormat = 'Y-m-d H:i:s';
+
+    /**
+     * Prepare a date for array / JSON serialization.
+     *
+     * @param  DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
+
+    /**
      * Interact with the user's first name.
      *
      * @return Attribute
@@ -58,8 +77,9 @@ class User extends Authenticatable
         );
     }
 
-    public function user()
+    public function orders()
     {
         return $this->hasMany(Order::class);
     }
+
 }

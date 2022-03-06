@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Http\Responses\ResponseMixin;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,6 +28,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        /**
+         * @mixin Response
+         */
+        Response::mixin(new ResponseMixin());
     }
 }

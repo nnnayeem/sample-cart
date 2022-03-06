@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -36,6 +38,22 @@ class Handler extends ExceptionHandler
     {
         $this->reportable(function (Throwable $e) {
             //
+        });
+
+        $this->renderable(function (\Exception $e) {
+            if (request()->is('api/*') || request()->wantsJson()) {
+                if ($e instanceof \Illuminate\Auth\AuthenticationException) return response()->json(Response::unauthenticated("User is not logged in"));
+                if ($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) return response()->json(Response::notFound($e->getMessage()));
+                if ($e instanceof \Symfony\Component\Routing\Exception\RouteNotFoundException) return response()->json(Response::notFound($e->getMessage()));
+                if ($e instanceof \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException) return response()->json(Response::unauthrorized("You are not authorized to perform this action"));
+                if ($e instanceof \Symfony\Component\HttpKernel\Exception\HttpException) return response()->json(Response::unauthrorized($e->getMessage()));
+                if ($e instanceof \Illuminate\Database\QueryException) {
+                    Log::error($e);
+                    return response()->json(Response::error(500, $e->getMessage()));
+                }
+                Log::error($e);
+                return response()->json(Response::error(500, $e->getMessage()));
+            }
         });
     }
 }
