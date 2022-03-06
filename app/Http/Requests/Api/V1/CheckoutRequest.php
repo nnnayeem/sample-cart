@@ -2,10 +2,13 @@
 
 namespace App\Http\Requests\Api\V1;
 
+use App\Traits\ApiForm;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CheckoutRequest extends FormRequest
 {
+    use ApiForm;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -25,7 +28,8 @@ class CheckoutRequest extends FormRequest
     {
         return [
             'products' => ['required','array', 'min:1'],
-            'products.*' => ['required','exists:products,id'],
+            'products.*.product_id' => ['required','exists:products,id'],
+            'products.*.quantity' => ['required','int', 'min:1'],
         ];
     }
 }

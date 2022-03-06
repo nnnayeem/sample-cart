@@ -26,8 +26,8 @@ Route::prefix('V1')->group(function () {
     });
 
     Route::middleware('auth:sanctum')->prefix('private')->group(function (){
+        Route::get('order/history', [OrderController::class, 'history']);
         Route::post('order/checkout', [OrderController::class, 'checkout']);
-        Route::post('order/history', [OrderController::class, 'history']);
     });
 
     Route::prefix('front')->group(function (){

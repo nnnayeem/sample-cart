@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\CheckoutRequest;
 use App\Http\Resources\OrderResource;
 use App\Services\Order\OrderService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
 class OrderController extends Controller
@@ -22,5 +21,10 @@ class OrderController extends Controller
 
     public function history()
     {
+        $orders = auth()->user()->orders;
+
+        $orders->load('orderItems');
+
+        return Response::success('User Order Fetched Successfully', OrderResource::collection($orders));
     }
 }
