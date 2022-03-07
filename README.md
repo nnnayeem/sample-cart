@@ -15,6 +15,7 @@ cd cart
 composer install
 cp env.example .env
 touch .env (edit your db config)
+php artisan migrate --seed
 php artisan test
 ```
 
