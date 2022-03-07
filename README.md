@@ -14,5 +14,7 @@ git clone https://github.com/nnnayeem/sample-cart cart
 cd cart
 composer install
 cp env.example .env
+touch .env (edit your db config)
+php artisan test
 ```
-Edit your .ev file according to your requirement.
+
